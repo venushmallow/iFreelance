@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  ####################################
+  # RabbitMQ broker for testing  
+  ####################################
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq-test
+  ####################################
+  # mysql database for testing
+  ####################################
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: notification
+  ####################################
+  # Notifications service under test
+  ####################################
+  notifications:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+      - rabbitmq
+    restart: always
+    environment:
+      db_conn: mysql+mysqlconnector://root:root@mysql:3306
+      rabbitmq_host: rabbitmq
+      rabbitmq_port: 5672
+      PYTHONUNBUFFERED: 1
+      SES_REGION: $SES_REGION
+      SES_EMAIL_SOURCE: $SES_EMAIL_SOURCE
+      AWS_ACCESS_KEY_ID_SES: $AWS_ACCESS_KEY_ID_SES
+      AWS_SECRET_ACCESS_KEY_SES: $AWS_SECRET_ACCESS_KEY_SES
+  ##################################
+  # Service for running pytest
+  ##################################
+  run-tests:
+    build:
+      context: ../
+      dockerfile: ci/Dockerfile.test
+    depends_on:
+      - mysql
+      - rabbitmq
+      - notifications 
+    environment:
+      db_conn: mysql+mysqlconnector://root:root@mysql:3306
+      rabbitmq_host: rabbitmq
+      rabbitmq_port: 5672
+      PYTHONUNBUFFERED: 1
+      SES_REGION: $SES_REGION
+      SES_EMAIL_SOURCE: $SES_EMAIL_SOURCE
+      AWS_ACCESS_KEY_ID_SES: $AWS_ACCESS_KEY_ID_SES
+      AWS_SECRET_ACCESS_KEY_SES: $AWS_SECRET_ACCESS_KEY_SES
