@@ -56,9 +56,7 @@ The following email IDs are provided for convenience in testing:
 
 **Setting up a local Stripe webhook endpoint (use existing account)**
 
-- Log in to Stripe with the following credentials:
- Email: lindy.lim.2019@scis.smu.edu.sg
- Password: Cs302devops!123
+- Log in to Stripe with the following credentials: <please ask owner>
 - Stripe CLI is required and can be installed with brew install stripe/stripe-cli/stripe
 - In terminal, enter stripe login
 - Follow the steps to configure Stripe CLI with the registered account.
