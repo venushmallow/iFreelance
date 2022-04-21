@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Jobs</title>
+    <link rel="stylesheet" href="../static/css/home.css">  
+    <link rel="stylesheet" href="../static/css/servicecard.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- Bootstrap libraries -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
+
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                    let status = "";
+                    status = document.getElementById('user_email').value;
+                    console.log(status);
+                    if(!status){
+                        document.getElementById('user_email').value = 'Login';
+                    }
+            }, false);
+        </script>
+</head>
+
+<body>
+    <nav class="navbar">
+        <nav class="nav">
+          <div class="container">
+              <div class="logo">
+                  <a href="/homepage">
+                  <img src="../static/img/logo.png" class="logo" alt="">
+                  </a>
+              </div>
+              <div id="mainListDiv" class="main_list">
+                  <ul class="navlinks">
+                      <form action = "/jobpage" method = "POST">
+                      <li>
+                        <input type="submit" class="link-button" value = "Find Services"/></li>
+                      </form>
+                      <form action = "/seller_page" method = "POST">
+                        <li>
+                          <input type="submit" class="link-button" value = "Your Jobs"/></li>
+                      </form>
+                      <form action = "/buyer_page" method = "POST">
+                        <li>
+                          <input type="submit" class="link-button" value = "Your Orders"/></li>
+                      </form>
+                      <form action = "/login_signup">
+                        <li><input id = "user_email" class="link-button" type="submit" value = "{{g.user.user_email}}"/>
+                            <input type="hidden" id="account_id" value="{{g.user.account_id}}"></li>
+                        </li>
+                      </form>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+    </nav>
+    
+        <div class="listingsearch">
+        </div>
+    
+    <!-- Service listing section -->
+    <section class="search-results">
+        <h2 class="heading"> <span class = "jobquantity"></span> services available</h2> 
+    </section>
+
+    <section class="hero-section">
+        <section class= "listing-section">
+            <input type="hidden" id="jobs_url" value="{{g.jobs_url}}">
+            <input type="hidden" id="stage" value="{{g.stage}}">
+        </section>
+    </section>
+
+    
+    <script>
+        // Helper function to display error message
+        function showError(message) {
+            // Hide the table and button in the event of erroreturn render_template("index.html", account_id=account_id, user_email=user_email)r
+            $('.listing-section').hide();
+            // $('#addJobBtn').hide();
+
+            // Display an error under the main container
+            $('.listing-section')
+                .append("<label>" + message + "</label>");
+        }
+
+        // anonymous async function - using await requires the function that calls it to be async
+        $(async () => {
+            // Change serviceURL to your own
+            let serviceURL = '';
+            let account_id = document.getElementById("account_id").value;
+            let stage = document.getElementById("stage").value;
+            let url = document.getElementById("jobs_url").value
+            if (stage == 'production'){
+                serviceURL = url + "/exclude/" + account_id;
+            } else{
+                serviceURL = url + "/jobs/exclude/" + account_id;
+            }
+
+            try {
+                const response =
+                    await fetch(
+                        serviceURL, { mode: 'cors', method: 'GET' }
+                    );
+                const result = await response.json();
+                if (response.status === 200) {
+                    // success case
+                    const jobs = result.data.jobs;
+                    // for loop to setup all table rows with obtained job data
+                    let rows = '';
+                    let id = 0;
+                    for (const job of jobs) {
+                        id ++;
+                        eachRow = '<div id="servicecardcontainer"> <div class="product-details">' +
+                            '<h1>' + job.title + '</h1>' +
+                            '<p class="information">' + '<b>Description:</b> '+ job.description + '</p>';
+                        eachRow += '<form id="jobinfo" action = "/placeorderpage" method="POST">';
+                        eachRow += '<input type="hidden" name="job_id" value="'+ job.job_id +'">';
+                        eachRow += '<input type="hidden" name="title" value="'+ job.title +'">';
+                        eachRow += '<input type="hidden" name="seller_id" value="'+ job.seller_id +'">';
+                        eachRow += '<div class="control"> <button class="btn">';
+                        eachRow += '<span class="price">' +"$" +job.price + '</span>';
+                        eachRow += '<span class="shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>';
+                        eachRow += '<span class="buy">Get now</span></button> </div> </form> </div>';
+                        eachRow += '<div class="product-image">  <img src="../static/img/job.gif"  width="200" height="200" alt="">   </div></div>';
+                        rows += eachRow;
+                    }
+                    // add all the rows to the table
+                    $('.listing-section').append(rows);
+                    $('.jobquantity').append('<span id = total>'+id+'</span>');
+
+                } else if (response.status == 404) {
+                    // No games
+                    showError
+                        (result.message);
+                } else {
+                    // unexpected outcome, throw the error
+                    throw response.status;
+                }
+
+            } catch (error) {
+                // Errors when calling the service; such as network error, 
+                // service offline, etc
+                showError
+                    ('There is a problem retrieving the jobs, please try again later.<br />' + error);
+
+            } // error
+        });
+    </script>
+
+<!-- Jquery needed -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- <script src="js/scripts.js"></script> -->
+
+<!-- Function used to shrink nav bar removing paddings and adding background color -->
+<script>
+    $(window).scroll(function() {
+        if ($(document).scrollTop() > 50) {
+            $('.nav').addClass('affix');
+            console.log("OK");
+        } else {
+            $('.nav').removeClass('affix');
+        }
+    });
+</script>
+
+<footer></footer>
+
+<script src="../static/js/footer.js"></script>
