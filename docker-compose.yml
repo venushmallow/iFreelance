@@ -1,0 +1,131 @@
+version: "3.8"
+
+volumes:
+  rabbitmq_data:
+
+services:
+  ####################################
+  # RabbitMQ: The messaging broker   
+  ####################################
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes: 
+      - rabbitmq_data:/var/lib/rabbitmq
+      
+  ####################################
+  # Atomic Microservice: jobs
+  ####################################
+  jobs:
+    build:
+      context: ./services/jobs
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - 'dev.env'
+    ports:
+      - "30000:5000"
+      
+  ####################################
+  # Atomic Microservice: Orders
+  ####################################
+  orders:
+    build:
+      context: ./services/orders
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - 'dev.env'
+    ports:
+      - "31000:5000"
+
+  ####################################
+  # Atomic Microservice: Accounts
+  ####################################
+  accounts:
+    build:
+      context: ./services/accounts
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - 'dev.env'
+    ports:
+      - "33000:5000"
+
+  # ####################################
+  # # User Interface: Admin Web
+  # ####################################
+  admin-web:
+    build:
+      context: ./user-interfaces
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - 'dev.env'
+    ports:
+      - "30002:5000"
+
+  ####################################
+  # Atomic Microservice: Notifications
+  ####################################
+  notifications:
+    build:
+      context: ./services/notifications
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - mysql
+      - rabbitmq
+    env_file:
+      - 'dev.env'
+    environment:
+      PYTHONUNBUFFERED: 1
+      SES_REGION: us-east-2
+      SES_EMAIL_SOURCE: support@ifreelance.site
+      AWS_ACCESS_KEY_ID_SES: AKIAUIUM6GO2LSY5UF5H
+      AWS_SECRET_ACCESS_KEY_SES: 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
+  
+  ####################################
+  # Composite Microservice: Pl. Order
+  ####################################
+  place-order:
+    build:
+      context: ./services/place-order
+      dockerfile: Dockerfile
+    restart: always
+    depends_on:
+      - jobs
+      - orders
+      - rabbitmq
+    env_file:
+      - 'dev.env'
+    ports:
+      - "32000:5000"
+    environment:
+      PYTHONUNBUFFERED: 1
+
+  ####################################
+  # Atomic Microservice: Service (Payment)
+  ####################################
+  payment:
+    build:
+      context: ./services/payment
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+  
+  ####################################
+  # Atomic Microservice: Service (Stripe)
+  ####################################
+  stripe:
+    build:
+      context: ./services/stripe
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "4242:4242"
