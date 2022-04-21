@@ -1,0 +1,30 @@
+stage:
+  production 
+db_conn:
+  mysql+mysqlconnector://admin:neU9sUoaMdvlqLZzfs4a@cs302-team3.ciyzvvxrkb4r.us-east-2.rds.amazonaws.com:3306
+rabbitmq_host:
+  b-cc216679-e6cd-4dee-bae6-d3db06914511.mq.us-east-2.amazonaws.com 
+rabbitmq_port:
+  5671 
+rabbitmq_username:
+  rabbit 
+rabbitmq_password:
+  7bq4HErBlP7oNAr6E3f1VSrE 
+STRIPE_PUBLISHABLE_KEY:
+  pk_test_51JjyKuHFNMBGsvIZ9YYe1MInqpQCiPJXd99FpZpMdtl5IqOOCZIjxXfOmWesmvyv59B55liB8TGKqAU1cDopBth800GKlQLrCJ
+STRIPE_SECRET_KEY:
+  sk_test_51JjyKuHFNMBGsvIZ9iKhzo15x5cKJnEFXj1O9poxr5nzj4B4Q24x8rW6F4i96NAmDbLZBuQ1PT2HVkyh19NPPexb00pATjrEpi
+STRIPE_WEBHOOK_SECRET:
+  whsec_P6CUiS2JDIECKhDrGCYCwWkhGmXWKfE7
+SES_REGION:
+  us-east-2 
+SES_EMAIL_SOURCE:
+  support@ifreelance.site 
+AWS_ACCESS_KEY_ID_SES:
+  AKIAUIUM6GO2LSY5UF5H 
+AWS_SECRET_ACCESS_KEY_SES:
+  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 
+payment_service_url:
+  https://ifreelance.site/api/v1/payment 
+payment_service_url_internal:
+  http://internal-CS302-Team3-Internal-ALB-615881807.us-east-2.elb.amazonaws.com:34000 

@@ -1,0 +1,10 @@
+payment_service_url:
+  https://ifreelance.site/api/v1/payment
+payment_service_url_internal:
+  http://payment:8080
+STRIPE_PUBLISHABLE_KEY:
+  pk_test_51JjyKuHFNMBGsvIZ9YYe1MInqpQCiPJXd99FpZpMdtl5IqOOCZIjxXfOmWesmvyv59B55liB8TGKqAU1cDopBth800GKlQLrCJ
+STRIPE_SECRET_KEY:
+  sk_test_51JjyKuHFNMBGsvIZ9iKhzo15x5cKJnEFXj1O9poxr5nzj4B4Q24x8rW6F4i96NAmDbLZBuQ1PT2HVkyh19NPPexb00pATjrEpi
+STRIPE_WEBHOOK_SECRET:
+  whsec_P6CUiS2JDIECKhDrGCYCwWkhGmXWKfE7

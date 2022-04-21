@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Stripe Payment Page Sample</title>
+    <link href="https://stripe-samples.github.io/developer-office-hours/demo.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">
+
+  </head>
+  <body>
+    <div id="main">
+      <div id="container">
+        <div id="panel">
+          <h1>Accept Payments</h1>
+
+          <form id="payment-form">
+            <label for="name">Name</label>
+            <input type="text" id="name" th:value="${username}" readonly>
+            <br />
+
+            <label for="email">Email</label>
+            <input type="text" id="email" th:value="${email}" readonly />
+            <br />
+
+            <div id="invisible">
+              <label for="amount">Amount</label>
+              <input type="number" id="amount" th:value="${amount}" readonly>
+
+              <label for="order">Order ID</label>
+              <input type="text" id="order" th:value="${order}" readonly>
+            </div>
+
+            <!-- <label for="amount">Amount</label>
+            <input type="number" id="amount" th:value="${amount}" readonly>
+            <br /> -->
+            <label for="displayAmount">Amount</label>
+            <input type="number" id="displayAmount" th:value="${displayAmount}" readonly>
+            <br />
+
+            <label for="amount">Comments</label>
+            <textarea id="comments" placeholder="Additional comments"></textarea>
+            <br />
+
+            <label for="card-element">Card</label>
+            <div id="card-element"></div>
+            <br />
+
+            <button>Pay</button>
+          </form>
+
+          <div id="messages" role="alert"></div>
+
+        </div>
+      </div>
+    </div>
+
+    <!--Best practice to load it from this URL on every page-->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
