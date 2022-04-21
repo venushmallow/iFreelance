@@ -1,0 +1,14 @@
+stripe_service_url:
+  https://ifreelance.site/api/v1/stripe
+stripe_service_url_internal:
+  http://stripe:4242
+orders_service_url:
+  https://ifreelance.site/api/v1/orders
+orders_service_url_internal:
+  http://orders:5000
+place_order_service_url:
+  https://ifreelance.site/api/v1/place-order 
+place_order_service_url_internal:
+  http://place-order:5000
+api_key:
+  Sx9XP4sl9x7xU4ziSRIL82eXxCQ8MAFG5uQn8XSd

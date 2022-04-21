@@ -1,0 +1,40 @@
+stage:
+  production 
+db_conn:
+  mysql+mysqlconnector://admin:neU9sUoaMdvlqLZzfs4a@cs302-team3.ciyzvvxrkb4r.us-east-2.rds.amazonaws.com:3306
+rabbitmq_host:
+  b-cc216679-e6cd-4dee-bae6-d3db06914511.mq.us-east-2.amazonaws.com 
+rabbitmq_port:
+  5671 
+rabbitmq_username:
+  rabbit 
+rabbitmq_password:
+  7bq4HErBlP7oNAr6E3f1VSrE 
+STRIPE_PUBLISHABLE_KEY:
+  pk_test_51JjyKuHFNMBGsvIZ9YYe1MInqpQCiPJXd99FpZpMdtl5IqOOCZIjxXfOmWesmvyv59B55liB8TGKqAU1cDopBth800GKlQLrCJ
+STRIPE_SECRET_KEY:
+  rk_test_51JjyKuHFNMBGsvIZIx93ymnOg0rjXklnrmUDWblBX5OxK6QgNElQ2GzC1oifhPzx5x6DNVmqprjVewjGhwjhn1QQ00wikEL3GF
+STRIPE_WEBHOOK_SECRET:
+  whsec_m6ScztQowJXKHVX0LnIiHGg9qakkHMGv
+SES_REGION:
+  us-east-2 
+SES_EMAIL_SOURCE:
+  support@ifreelance.site 
+AWS_ACCESS_KEY_ID_SES:
+  AKIAUIUM6GO2LSY5UF5H 
+AWS_SECRET_ACCESS_KEY_SES:
+  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 
+orders_service_url:
+  https://ifreelance.site/api/v1/orders 
+place_order_service_url:
+  https://ifreelance.site/api/v1/place-order 
+stripe_service_url:
+  https://ifreelance.site/api/v1/stripe 
+api_key:
+  Sx9XP4sl9x7xU4ziSRIL82eXxCQ8MAFG5uQn8XSd 
+orders_service_url_internal:
+  http://internal-CS302-Team3-Internal-ALB-615881807.us-east-2.elb.amazonaws.com:30000 
+place_order_service_url_internal:
+  http://internal-CS302-Team3-Internal-ALB-615881807.us-east-2.elb.amazonaws.com:32000 
+stripe_service_url_internal:
+  http://internal-CS302-Team3-Internal-ALB-615881807.us-east-2.elb.amazonaws.com:35000
