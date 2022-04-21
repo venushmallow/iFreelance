@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="../static/css/home.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home page</title>
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Bootstrap libraries -->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Latest compiled and minified JavaScript -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+    crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+    crossorigin="anonymous"></script>
+<style>
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+          let status = "";
+          status = document.getElementById('user_email').value;
+          console.log(status);
+          if(!status){
+            document.getElementById('user_email').value = 'Login';
+          }
+  }, false);
+  </script>
+</head>
+<body>
+    <!-- store account id and email after login -->
+
+    <input type="hidden" name="account_id" value="{{account_id}}">
+    <input type="hidden" name="user_email" value="{{user_email}}">
+
+    <nav class="navbar">
+        <nav class="nav">
+          <div class="container">
+              <div class="logo">
+                  <a href="/homepage">
+                  <img src="../static/img/logo.png" class="logo" alt="">
+                  </a>
+              </div>
+              <div id="mainListDiv" class="main_list">
+                  <ul class="navlinks">
+                      <form action = "/jobpage" method = "POST">
+                      <li>
+                        <input type="submit" class="link-button" value = "Find Services"/></li>
+                      </form>
+                      <form action = "/seller_page" method = "POST">
+                        <li>
+                          <input type="submit" class="link-button" value = "Your Jobs"/></li>
+                      </form>
+                      <form action = "/buyer_page" method = "POST">
+                        <li>
+                          <input type="submit" class="link-button" value = "Your Orders"/></li>
+                      </form>
+                      <form action = "/login_signup">
+                          <li><input id = "user_email" class="link-button" type="submit" value = "{{g.user.user_email}}"/>
+                              <input type="hidden" id="account_id" value="{{g.user.account_id}}"></li>
+                          </li>
+                      </form>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+    </nav>
+
+    <section class="home">
+        <div class="search">
+          <input type="hidden" id="jobs_url" value="{{g.jobs_url}}">
+        </div>
+    </section>
+
+    <div style="height: 1000px">
+    <h2 class="service-category">Popular Services</h2>
+    <section class="hero-section">
+      <div class="card-grid">
+        <a class="card" href="#">
+          <div class="card__background" style="background-image: url(https://images.unsplash.com/photo-1557177324-56c542165309?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)"></div>
+          <div class="card__content">
+            <p class="card__category">Category</p>
+            <h3 class="card__heading">Website Design</h3>
+          </div>
+        </a>
+        <a class="card" href="#">
+          <div class="card__background" style="background-image: url(https://images.unsplash.com/photo-1557187666-4fd70cf76254?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60)"></div>
+          <div class="card__content">
+            <p class="card__category">Category</p>
+            <h3 class="card__heading">Logo Design</h3>
+          </div>
+        </a>
+        <a class="card" href="#">
+          <div class="card__background" style="background-image: url(https://images.unsplash.com/photo-1556680262-9990363a3e6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60)"></div>
+          <div class="card__content">
+            <p class="card__category">Category</p>
+            <h3 class="card__heading">Video Editing</h3>
+          </div>
+        </li>
+        <a class="card" href="#">
+          <div class="card__background" style="background-image: url(https://images.unsplash.com/photo-1557004396-66e4174d7bf6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60)"></div>
+          <div class="card__content">
+            <p class="card__category">Category</p>
+            <h3 class="card__heading">Transaction</h3>
+          </div>
+        </a>
+      <div>
+    </section>
+
+</div>
+
+
+<section class="collection-container">
+  <form action = "" method = "" class="collection">
+      <img src="../static/img/client.jpg" alt="">
+      <p class="collection-title">For clients <br> Find talent your way</p>
+  </form>
+  <form action = "" method = "" class="collection">
+    <img src="../static/img/talent.jpg" alt="">
+    <p class="collection-title">For sellers <br> Find great work</p>
+  </form>
+</section>
+
+  <script>
+    // Helper function to display error message
+    function showError(message) {
+        $('.search').hide();
+        // Display an error under the main container
+        $('.search')
+            .append("<label>" + message + "</label>");
+    }
+
+    // anonymous async function - using await requires the function that calls it to be async
+    $(async () => {
+        let url = document.getElementById("jobs_url").value
+        let serviceURL = url + "/health";
+        try {
+            const response =
+                await fetch(
+                    serviceURL, { mode: 'cors', method: 'GET' }
+                );
+            const result = await response.json();
+            if (response.status === 200) {
+                // success case
+                const msg = result.message;
+                // add msg to search field for display purpose 
+                $('.search').append("<h1>"+ msg + "</h1>");
+
+            } else if (response.status == 404) {
+                // No games
+                showError
+                    (result.message);
+            } else {
+                // unexpected outcome, throw the error
+                throw response.status;
+            }
+
+        } catch (error) {
+            // Errors when calling the service; such as network error, 
+            // service offline, etc
+            showError
+                ('There is a problem retrieving the jobs, please try again later.<br />' + error);
+
+        } // error
+    });
+  </script>
+
+<!-- Jquery needed -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- <script src="js/scripts.js"></script> -->
+
+<!-- Function used to shrink nav bar removing paddings and adding background color -->
+    <script>
+        $(window).scroll(function() {
+            if ($(document).scrollTop() > 50) {
+                $('.nav').addClass('affix');
+                console.log("OK");
+            } else {
+                $('.nav').removeClass('affix');
+            }
+        });
+    </script>
+
+
+<footer></footer>
+
+<script src="../static/js/footer.js"></script>
